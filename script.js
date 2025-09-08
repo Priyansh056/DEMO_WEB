@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+/*document.addEventListener('DOMContentLoaded', () => {
 
     // --- DATA ---
     // Icons are stored as SVG strings
@@ -129,4 +129,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-});
+});*/
