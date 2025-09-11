@@ -3,458 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATI Vidisha - Professional Placement Portal</title>
-    
-    <script>
-        tailwind.config = { theme: { extend: {} } }
-    </script>
+    <title>Training and Placement Cell</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <style type="text/tailwindcss">
-        /* Custom Icon Base Styles */
-        .icon-sm { @apply w-4 h-4; }
-        .icon-brand { @apply w-8 h-8; }
-        .icon-menu-open, .icon-menu-close { @apply h-6 w-6; }
-        .chevron-icon { @apply w-4 h-4 transition-transform duration-200; }
-        .chevron-icon.rotate-180 { transform: rotate(180deg); }
-
-        /* Navigation Links */
-        .nav-link { @apply text-gray-300 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer; }
-        .mobile-nav-link { @apply text-gray-300 hover:text-white hover:bg-black hover:bg-opacity-20 block px-3 py-2 rounded-md text-base font-medium cursor-pointer; }
-        .placement-dropdown-button { @apply bg-black bg-opacity-20 text-white px-4 py-2 rounded-lg hover:bg-opacity-30 flex items-center space-x-2 transition-colors duration-200 font-medium; }
-        .hamburger-button { @apply text-white p-2 rounded-md hover:text-[#FFD601] hover:bg-black hover:bg-opacity-20; }
-
-        /* Focus States for Accessibility */
-        .nav-link:focus-visible, .placement-dropdown-button:focus-visible, .hamburger-button:focus-visible, .dropdown-item:focus-visible, .modal-close-button:focus-visible {
-            @apply outline-none ring-2 ring-offset-2 ring-offset-[#142B6F] ring-[#FFD601];
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #E1DEE6;
         }
-
-        /* Dropdown Menu & Search */
-        .dropdown-menu {
-            @apply absolute top-full mt-2 w-[90vw] sm:w-96 bg-white rounded-lg shadow-xl border border-gray-200 z-50 origin-top;
-            @apply invisible opacity-0 scale-95 transition-all duration-200 ease-out;
+        .text-primary-dark {
+            color: #142B6F;
         }
-        .dropdown-menu.active { @apply visible opacity-100 scale-100; }
-        .dropdown-search-wrapper { @apply p-2 border-b border-gray-200; }
-        .dropdown-search-input { @apply w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-[#142B6F] focus:border-transparent; }
-        .dropdown-items-container { @apply max-h-72 overflow-y-auto; }
-        .dropdown-item { @apply w-full text-left px-4 py-3 hover:bg-[#E1DEE6] transition-colors flex items-center space-x-3 cursor-pointer; }
-        .dropdown-item.is-focused { @apply bg-[#E1DEE6]; }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            @apply md:hidden bg-black bg-opacity-20 origin-top;
-            @apply invisible opacity-0 scale-95 transition-all duration-200 ease-out;
+        .bg-primary-dark {
+            background-color: #142B6F;
         }
-        .mobile-menu.active { @apply visible opacity-100 scale-100; }
-        .mobile-menu .placement-dropdown-button { @apply justify-between w-full; }
-
-        /* Modal & Animation */
-        .modal-container { @apply fixed inset-0 z-50 flex flex-col; @apply invisible; }
-        .modal-container.active { @apply visible; }
-        .modal-overlay { @apply absolute inset-0 bg-gray-800 transition-opacity duration-300 ease-out; @apply opacity-0; }
-        .modal-container.active .modal-overlay { @apply opacity-75; }
-        .modal-content-wrapper { @apply relative flex flex-col w-full h-full bg-white transition-transform duration-300 ease-out; @apply opacity-0 scale-95; }
-        .modal-container.active .modal-content-wrapper { @apply opacity-100 scale-100; }
-        .modal-header { @apply bg-[#142B6F] text-white p-4 sm:p-6 shadow-lg; }
-        .modal-body-wrapper { @apply flex-1 overflow-y-auto bg-[#E1DEE6] relative; }
-        .modal-scroll-content { @apply p-4 sm:p-8; }
-
-        /* Loader/Spinner */
-        .modal-loader { @apply absolute inset-0 flex-col items-center justify-center bg-[#E1DEE6] z-10; @apply hidden; }
-        .modal-loader.active { @apply flex; }
-        .spinner { @apply w-12 h-12 border-4 border-[#142B6F] border-t-transparent rounded-full animate-spin; }
-
-        /* Toast Notification */
-        .toast-notification {
-            @apply fixed bottom-5 right-5 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg text-sm transition-all duration-300 ease-out;
-            @apply invisible opacity-0 translate-y-4;
+        .bg-accent-yellow {
+            background-color: #FFD601;
         }
-        .toast-notification.show {
-            @apply visible opacity-100 translate-y-0;
+        .border-primary-dark {
+            border-color: #142B6F;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
-<body class="bg-[#E1DEE6] font-sans">
+<body>
 
-    <div id="app-container">
-        <nav class="bg-[#142B6F] shadow-lg sticky top-0 z-40">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-16">
-                    <div class="flex items-center">
-                        <svg class="icon-brand text-[#FFD601] mr-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h8"/><path d="M12 4v16"/></svg>
-                        <span class="text-white text-lg sm:text-xl font-bold">SATI Vidisha Portal</span>
-                    </div>
-
-                    <div class="hidden md:flex items-center space-x-1">
-                        <a data-page-name="Home" class="nav-link">Home</a>
-                        <a data-page-name="Academics" class="nav-link">Academics</a>
-                        <div class="relative">
-                            <button id="desktop-dropdown-button" class="placement-dropdown-button" aria-haspopup="true" aria-expanded="false" aria-controls="desktop-dropdown-menu">
-                                <svg class="icon-sm" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h8"/><path d="M12 4v16"/></svg>
-                                <span>Placement Cell</span>
-                                <svg class="chevron-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
-                            </button>
-                            <div id="desktop-dropdown-menu" class="dropdown-menu" role="menu">
-                                </div>
-                        </div>
-                        <a data-page-name="Admissions" class="nav-link">Admissions</a>
-                        <a data-page-name="Contact" class="nav-link">Contact</a>
-                    </div>
-
-                    <div class="md:hidden flex items-center">
-                        <button id="hamburger-button" class="hamburger-button" aria-haspopup="true" aria-expanded="false" aria-controls="mobile-menu">
-                            <svg class="icon-menu-open" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
-                            <svg class="icon-menu-close hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                        </button>
-                    </div>
-                </div>
+    <!-- Header Section -->
+    <header class="bg-primary-dark text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- University Name/Logo -->
+            <div class="text-xl md:text-2xl font-bold tracking-wider">
+                <a href="#home">College Name</a>
             </div>
-
-            <div id="mobile-menu" class="mobile-menu" role="menu">
-                 </div>
-        </nav>
-
-        <main class="max-w-7xl mx-auto px-4 py-8">
-            <div class="text-center">
-                <h1 class="text-3xl font-bold text-[#142B6F] mb-4">Welcome to SATI Vidisha - Professional Placement Portal</h1>
-                <p class="text-gray-700 mb-8">Click on "Placement Cell" to explore our services and resources.</p>
-                </div>
-        </main>
-        
-        <div id="modal-container" class="modal-container" role="dialog" aria-modal="true" aria-hidden="true">
-            <div class="modal-overlay"></div>
-            <div class="modal-content-wrapper" role="document">
-                <header id="modal-header" class="modal-header">
-                    </header>
-                <div class="modal-body-wrapper">
-                    <div id="modal-loader" class="modal-loader">
-                        <div class="spinner"></div>
-                        <p class="text-gray-500 mt-4">Loading Content...</p>
-                    </div>
-                    <div id="modal-scroll-content" class="modal-scroll-content hidden">
-                         </div>
-                </div>
+            <!-- Navigation -->
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#about" class="hover:text-yellow-300 transition-colors">About Us</a>
+                <a href="#placements" class="hover:text-yellow-300 transition-colors">Placements</a>
+                <a href="#brochure" class="hover:text-yellow-300 transition-colors">Brochure</a>
+                <a href="#records" class="hover:text-yellow-300 transition-colors">Records</a>
+                <a href="#gallery" class="hover:text-yellow-300 transition-colors">Gallery</a>
+                <a href="#irp" class="hover:text-yellow-300 transition-colors">IRP</a>
+                <a href="#contact" class="hover:text-yellow-300 transition-colors">Contact</a>
+            </nav>
+            <!-- Hamburger Menu for Mobile -->
+            <div class="md:hidden">
+                <button id="menu-button" class="text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
             </div>
         </div>
-    </div>
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-primary-dark text-white p-4 mt-2 rounded-lg shadow-lg">
+            <nav class="flex flex-col space-y-4 text-center text-lg">
+                <a href="#about" class="hover:text-yellow-300 transition-colors">About Us</a>
+                <a href="#placements" class="hover:text-yellow-300 transition-colors">Placements</a>
+                <a href="#brochure" class="hover:text-yellow-300 transition-colors">Brochure</a>
+                <a href="#records" class="hover:text-yellow-300 transition-colors">Records</a>
+                <a href="#gallery" class="hover:text-yellow-300 transition-colors">Gallery</a>
+                <a href="#irp" class="hover:text-yellow-300 transition-colors">IRP</a>
+                <a href="#contact" class="hover:text-yellow-300 transition-colors">Contact</a>
+            </nav>
+        </div>
+    </header>
 
-<script>
-/**
- * Professional Placement Portal Application
- *
- * This script manages all interactivity for the navigation, dropdowns,
- * modals, and advanced features like search and keyboard navigation.
- */
-document.addEventListener('DOMContentLoaded', () => {
+    <!-- Main Content Sections -->
+    <main class="container mx-auto px-4 py-8">
 
-    const App = {
-        // --- STATE & CONFIGURATION ---
-        state: {
-            isMobileMenuOpen: false,
-            activeDropdown: null, // can be 'desktop' or 'mobile'
-            isModalOpen: false,
-            focusedDropdownIndex: -1,
-        },
-        
-        // --- DATA (Icons and Content) ---
-        icons: {
-            building: `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h8"/><path d="M12 4v16"/></svg>`,
-            briefcase: `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
-            fileText: `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>`,
-            trophy: `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>`,
-            camera: `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>`,
-            users: `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
-            externalLink: `<svg class="w-6 h-6 text-[#142B6F]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>`,
-            x: `<svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>`
-        },
-        placementOptions: [
-            { id: 'about', title: 'About Placement Cell', icon: 'building', description: 'Training & Placement Office, SATI Vidisha', content: { heading: 'Training & Placement Cell', sections: [ { title: 'About T&P Office', content: 'The Training & Placement Office, SATI Vidisha facilitates the process of placement of students passing out from the Institute besides collaborating with leading organizations and institutes in setting up of internship and training program of students.' }, { title: 'Industry Categories & Recruiters', content: 'Core Engineering Industries, IT & IT Enabled Services, Manufacturing Industries, Consultancy Firms, Finance Companies Management Organization, R & D Laboratories. Nearly 40 companies recruit our students through campus interviews annually.' } ] } },
-            { id: 'placements', title: 'Placements', icon: 'briefcase', description: 'Campus placement process and preparation', content: { heading: 'Placement Process', sections: [ { title: 'Placement Season Timeline', content: 'The placement season runs through the course of the year, commencing from July to June. Job offers, dates of interviews, selection of candidates etc. are announced through the Training & Placement Office.' }, { title: 'Pre-Placement Preparation Program', content: 'Comprehensive preparation including: Mock Tests, Communication Skills Development, Professional Resume Writing Training, and Mock Interview Sessions.' } ] } },
-            { id: 'brochure', title: 'Placement Brochure', icon: 'fileText', description: 'Download placement brochures for different years', content: { heading: 'Placement Brochures', sections: [ { title: 'Placement Brochure 2025-26', content: 'Latest comprehensive placement brochure containing detailed information about SATI Vidisha academic programs, faculty expertise, student profiles, and infrastructure facilities.' }, { title: 'Placement Brochure 2024-25', content: 'Previous year comprehensive placement document showcasing student achievements, department-wise placement records, salary packages, and company collaborations.' } ] } },
-            { id: 'records', title: 'Placement Records', icon: 'trophy', description: 'Year-wise placement records and achievements', content: { heading: 'Placement Records', sections: [ { title: 'Recent Placement Records (2020-2025)', content: '📊 Complete year-wise statistics including company-wise selections, package details, department-wise performance, and placement percentages.' }, { title: 'Historical Placement Data (2015-2020)', content: '📈 Decade-long placement history showing consistent growth, institutional development, and improved industry partnerships over the years.' } ] } },
-            { id: 'gallery', title: 'Placement Gallery', icon: 'camera', description: 'Photos from placement events and ceremonies', content: { heading: 'Placement Gallery', sections: [ { title: 'Annual Placement Ceremonies', content: '📸 Photo gallery showcasing annual placement ceremonies, job offer celebrations, award distribution events, and recognition programs.' }, { title: 'Campus Recruitment Events', content: '🏢 Visual documentation of pre-placement talks, company presentations, recruitment processes, and campus interviews conducted by various organizations.' } ] } },
-            { id: 'industry-readiness', title: 'Industry Readiness Program', icon: 'users', description: 'Training programs to prepare students for industry', content: { heading: 'Industry Readiness', sections: [ { title: 'Comprehensive Pre-Placement Training', content: '🎯 Complete preparation program including: Mock Tests, Communication Skills, Resume Workshops, and Mock Interviews with industry experts.' }, { title: 'Technical & Soft Skills Development', content: '💻 Regular skill enhancement workshops covering latest technology trends, project management, professional communication, and problem-solving skills.' } ] } }
-        ],
+        <!-- Hero Section -->
+        <section id="home" class="text-center py-16 md:py-24">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-primary-dark tracking-tight leading-tight">
+                Training and Placement Cell
+            </h1>
+            <h2 class="text-xl md:text-2xl mt-4 font-semibold text-gray-600">
+                Bridging Talent with Opportunity
+            </h2>
+            <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-500">
+                The Training and Placement Cell is a pivotal component of our institution, dedicated to providing students with the skills and opportunities necessary to build successful careers. We serve as the vital link between our talented students and the leading corporations of the industry.
+            </p>
+        </section>
 
-        // --- DOM ELEMENT CACHE ---
-        elements: {},
+        <!-- About Placement Cell Section -->
+        <section id="about" class="bg-white p-8 md:p-12 rounded-2xl shadow-lg my-12 transition-all duration-300 hover-lift">
+            <h3 class="text-3xl font-bold text-primary-dark mb-4">About Placement Cell</h3>
+            <p class="text-gray-700 leading-relaxed">
+                Our Placement Cell operates with a clear vision: to empower our students to become competent and sought-after professionals. Through a comprehensive approach, we organize workshops, seminars, and training sessions on a regular basis. Our programs focus on enhancing communication, leadership, and technical skills, ensuring that every student is well-prepared to meet the demands of the corporate world. We maintain strong ties with a diverse range of companies, from startups to multinational corporations, to provide a wide array of placement opportunities.
+            </p>
+        </section>
 
-        /**
-         * Initializes the application, caches DOM elements, and binds events.
-         */
-        init() {
-            this.cacheDom();
-            this.bindEvents();
-            this.renderAll();
-            this.checkUrlHash();
-        },
-
-        /**
-         * Caches frequently accessed DOM elements.
-         */
-        cacheDom() {
-            this.elements.body = document.body;
-            this.elements.appContainer = document.getElementById('app-container');
-            this.elements.hamburgerBtn = document.getElementById('hamburger-button');
-            this.elements.iconMenuOpen = document.querySelector('.icon-menu-open');
-            this.elements.iconMenuClose = document.querySelector('.icon-menu-close');
-            this.elements.mobileMenu = document.getElementById('mobile-menu');
-            this.elements.desktopDropdownBtn = document.getElementById('desktop-dropdown-button');
-            this.elements.desktopDropdownMenu = document.getElementById('desktop-dropdown-menu');
-            this.elements.modalContainer = document.getElementById('modal-container');
-            this.elements.modalHeader = document.getElementById('modal-header');
-            this.elements.modalLoader = document.getElementById('modal-loader');
-            this.elements.modalScrollContent = document.getElementById('modal-scroll-content');
-        },
-
-        /**
-         * Binds all necessary event listeners.
-         */
-        bindEvents() {
-            this.elements.hamburgerBtn.addEventListener('click', () => this.toggleMobileMenu());
-            this.elements.desktopDropdownBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.toggleDropdown('desktop');
-            });
-
-            // Handle clicks on static nav links
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    this.showPlaceholderMessage(e.currentTarget.dataset.pageName);
-                });
-            });
-
-            document.addEventListener('click', () => this.closeAllPopups());
-            document.addEventListener('keydown', (e) => this.handleKeyboardInput(e));
-        },
-
-        /**
-         * Renders all dynamic content on startup.
-         */
-        renderAll() {
-            this.renderDropdownContent(this.elements.desktopDropdownMenu, 'desktop');
-            const mobileNavHtml = `
-                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                    <a data-page-name="Home" class="mobile-nav-link">Home</a>
-                    <a data-page-name="Academics" class="mobile-nav-link">Academics</a>
-                    <div class="relative">
-                        <button id="mobile-dropdown-button" class="placement-dropdown-button" aria-haspopup="true" aria-expanded="false" aria-controls="mobile-dropdown-menu">
-                            <span>Placement Cell</span>
-                            <svg class="chevron-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
-                        </button>
-                        <div id="mobile-dropdown-menu" class="dropdown-menu !left-0 !w-full" role="menu"></div>
-                    </div>
-                    <a data-page-name="Admissions" class="mobile-nav-link">Admissions</a>
-                    <a data-page-name="Contact" class="mobile-nav-link">Contact</a>
+        <!-- Placements Section -->
+        <section id="placements" class="my-12">
+            <h3 class="text-3xl font-bold text-primary-dark mb-6">Placements</h3>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover-lift">
+                    <h4 class="text-xl font-semibold text-primary-dark mb-2">Our Placement Process</h4>
+                    <p class="text-gray-700 leading-relaxed">
+                        The placement process is streamlined to be efficient and transparent. It typically involves a pre-placement talk, written tests, group discussions, and personal interviews. Our team works closely with students to prepare them for each stage, offering mock interview sessions and resume-building workshops.
+                    </p>
                 </div>
-            `;
-            this.elements.mobileMenu.innerHTML = mobileNavHtml;
-            
-            this.elements.mobileDropdownBtn = document.getElementById('mobile-dropdown-button');
-            this.elements.mobileDropdownMenu = document.getElementById('mobile-dropdown-menu');
-            this.renderDropdownContent(this.elements.mobileDropdownMenu, 'mobile');
-            this.elements.mobileDropdownBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.toggleDropdown('mobile');
-            });
-            
-            // Add listeners for newly created mobile links
-            this.elements.mobileMenu.querySelectorAll('.mobile-nav-link').forEach(link => {
-                 link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    this.showPlaceholderMessage(e.currentTarget.dataset.pageName);
-                });
-            });
-        },
-
-        /**
-         * Renders the content (search + items) for a dropdown menu.
-         */
-        renderDropdownContent(menuElement, dropdownId, filter = '') {
-            const searchHtml = `<div class="dropdown-search-wrapper"><input type="search" placeholder="Search options..." class="dropdown-search-input" data-dropdown-id="${dropdownId}" value="${filter}" /></div>`;
-            const filteredOptions = this.placementOptions.filter(opt => opt.title.toLowerCase().includes(filter.toLowerCase()) || opt.description.toLowerCase().includes(filter.toLowerCase()));
-            
-            const itemsHtml = `<div class="dropdown-items-container" role="list">${filteredOptions.map((option, index) => `
-                <a href="#${option.id}" role="listitem" class="dropdown-item" data-page-id="${option.id}" data-index="${index}">
-                    <div class="text-[#142B6F] flex-shrink-0">${this.icons[option.icon]}</div>
-                    <div>
-                        <div class="font-medium text-sm text-gray-800">${option.title}</div>
-                        <div class="text-xs text-gray-500 mt-1">${option.description}</div>
-                    </div>
-                </a>`).join('') || `<p class="p-4 text-sm text-gray-500">No results found.</p>`}
-            </div>`;
-            
-            menuElement.innerHTML = searchHtml + itemsHtml;
-            
-            const searchInput = menuElement.querySelector('.dropdown-search-input');
-            searchInput.addEventListener('input', () => this.renderDropdownContent(menuElement, dropdownId, searchInput.value));
-            searchInput.addEventListener('click', e => e.stopPropagation());
-            
-            menuElement.querySelector('.dropdown-items-container').addEventListener('click', (e) => {
-                const item = e.target.closest('.dropdown-item');
-                if (item) {
-                    e.preventDefault();
-                    this.openModal(item.dataset.pageId);
-                }
-            });
-        },
-
-        /** UI TOGGLE & STATE MANAGEMENT */
-        toggleMobileMenu() {
-            this.state.isMobileMenuOpen = !this.state.isMobileMenuOpen;
-            this.elements.hamburgerBtn.setAttribute('aria-expanded', this.state.isMobileMenuOpen);
-            this.elements.mobileMenu.classList.toggle('active', this.state.isMobileMenuOpen);
-            this.elements.iconMenuOpen.classList.toggle('hidden', this.state.isMobileMenuOpen);
-            this.elements.iconMenuClose.classList.toggle('hidden', !this.state.isMobileMenuOpen);
-            if (!this.state.isMobileMenuOpen) this.closeAllPopups();
-        },
-
-        toggleDropdown(dropdownId) {
-            const wasActive = this.state.activeDropdown === dropdownId;
-            this.closeAllPopups(true);
-            if (!wasActive) {
-                this.state.activeDropdown = dropdownId;
-                const btn = this.elements[`${dropdownId}DropdownBtn`];
-                const menu = this.elements[`${dropdownId}DropdownMenu`];
-                btn.setAttribute('aria-expanded', 'true');
-                menu.classList.add('active');
-                this.state.focusedDropdownIndex = -1;
-                setTimeout(() => menu.querySelector('input').focus(), 100);
-            }
-        },
-
-        openModal(pageId) {
-            if (!pageId) return;
-            this.closeAllPopups();
-            this.state.isModalOpen = true;
-            this.elements.body.style.overflow = 'hidden';
-            this.elements.modalContainer.classList.add('active');
-            this.elements.modalContainer.setAttribute('aria-hidden', 'false');
-            this.elements.modalLoader.classList.add('active');
-            this.elements.modalScrollContent.classList.add('hidden');
-            
-            window.location.hash = pageId;
-
-            setTimeout(() => {
-                const pageData = this.placementOptions.find(opt => opt.id === pageId);
-                if (pageData) {
-                    this.renderModalContent(pageData);
-                    this.elements.modalLoader.classList.remove('active');
-                    this.elements.modalScrollContent.classList.remove('hidden');
-                }
-            }, 500);
-        },
-
-        renderModalContent(pageData) {
-            this.elements.modalHeader.innerHTML = `
-                <div class="flex justify-between items-center max-w-7xl mx-auto">
-                    <div class="flex items-center space-x-3">
-                        <div class="text-[#FFD601] w-8 h-8">${this.icons[pageData.icon].replace('class="icon-sm"', 'class="w-8 h-8"')}</div>
-                        <h1 class="text-xl sm:text-3xl font-bold">${pageData.content.heading}</h1>
-                    </div>
-                    <button class="modal-close-button text-white hover:text-[#FFD601] transition-colors p-2 hover:bg-black hover:bg-opacity-20 rounded-lg">
-                        ${this.icons.x}
-                    </button>
-                </div>`;
-            
-            this.elements.modalScrollContent.innerHTML = `
-                <div class="grid gap-6 md:gap-8">${pageData.content.sections.map(section => `
-                    <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg border-l-4 border-[#FFD601]">
-                        <h2 class="text-xl sm:text-2xl font-bold text-[#142B6F] mb-4 flex items-center space-x-3">
-                            ${this.icons.externalLink}<span>${section.title}</span>
-                        </h2>
-                        <div class="text-gray-700 leading-relaxed text-base sm:text-lg whitespace-pre-line">${section.content}</div>
-                    </div>`).join('')}
+                <div class="bg-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover-lift">
+                    <h4 class="text-xl font-semibold text-primary-dark mb-2">Recruiting Partners</h4>
+                    <p class="text-gray-700 leading-relaxed">
+                        We are proud of our extensive network of recruiting partners. Leading companies from various sectors including IT, core engineering, finance, and marketing visit our campus every year to recruit our students. Our consistent track record of high placement rates speaks volumes about the quality of our students and our placement programs.
+                    </p>
                 </div>
-                <div class="mt-8 sm:mt-12 flex justify-center space-x-6 pt-8 border-t-2 border-gray-200">
-                    <button class="modal-close-button px-8 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 font-medium text-lg shadow-lg">Close</button>
-                </div>`;
+            </div>
+        </section>
 
-            this.elements.modalContainer.querySelectorAll('.modal-close-button').forEach(btn => btn.addEventListener('click', () => this.closeModal()));
-        },
+        <!-- Placement Brochure Section -->
+        <section id="brochure" class="bg-primary-dark text-white p-8 md:p-12 rounded-2xl shadow-lg my-12 flex flex-col items-center text-center transition-all duration-300 hover-lift">
+            <h3 class="text-3xl font-bold mb-4">Placement Brochure</h3>
+            <p class="max-w-xl mb-6">
+                Download our latest Placement Brochure to get detailed information about our students, academic programs, and the opportunities we offer.
+            </p>
+            <a href="#" class="bg-accent-yellow text-primary-dark font-semibold py-3 px-6 rounded-full shadow-md hover:bg-yellow-400 transition-colors">Download Brochure</a>
+        </section>
 
-        closeModal() {
-            this.state.isModalOpen = false;
-            this.elements.body.style.overflow = '';
-            this.elements.modalContainer.classList.remove('active');
-            this.elements.modalContainer.setAttribute('aria-hidden', 'true');
-            if(history.pushState) {
-                history.pushState("", document.title, window.location.pathname + window.location.search);
+        <!-- Placement Records Section -->
+        <section id="records" class="my-12">
+            <h3 class="text-3xl font-bold text-primary-dark mb-6">Placement Records</h3>
+            <div class="overflow-x-auto bg-white rounded-2xl shadow-lg p-6">
+                <table class="min-w-full table-auto">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Year</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Students Placed</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Highest Package (LPA)</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Average Package (LPA)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-200">
+                            <td class="px-4 py-2">2023-24</td>
+                            <td class="px-4 py-2">95%</td>
+                            <td class="px-4 py-2">35.0</td>
+                            <td class="px-4 py-2">8.5</td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="px-4 py-2">2022-23</td>
+                            <td class="px-4 py-2">92%</td>
+                            <td class="px-4 py-2">28.0</td>
+                            <td class="px-4 py-2">7.8</td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="px-4 py-2">2021-22</td>
+                            <td class="px-4 py-2">90%</td>
+                            <td class="px-4 py-2">25.0</td>
+                            <td class="px-4 py-2">7.2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Placement Gallery Section -->
+        <section id="gallery" class="my-12">
+            <h3 class="text-3xl font-bold text-primary-dark mb-6">Placement Gallery</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <img src="https://placehold.co/600x400/142B6F/FFD601?text=Placement+Day" alt="Placement Day" class="w-full h-auto object-cover rounded-xl shadow-lg transition-all duration-300 hover-scale hover:scale-105">
+                <img src="https://placehold.co/600x400/FFD601/142B6F?text=Recruiter+Visit" alt="Recruiter Visit" class="w-full h-auto object-cover rounded-xl shadow-lg transition-all duration-300 hover-scale hover:scale-105">
+                <img src="https://placehold.co/600x400/E1DEE6/142B6F?text=Interview+Session" alt="Interview Session" class="w-full h-auto object-cover rounded-xl shadow-lg transition-all duration-300 hover-scale hover:scale-105">
+                <img src="https://placehold.co/600x400/142B6F/FFD601?text=Student+Testimonial" alt="Student Testimonial" class="w-full h-auto object-cover rounded-xl shadow-lg transition-all duration-300 hover-scale hover:scale-105">
+                <img src="https://placehold.co/600x400/FFD601/142B6F?text=Alumni+Meet" alt="Alumni Meet" class="w-full h-auto object-cover rounded-xl shadow-lg transition-all duration-300 hover-scale hover:scale-105">
+                <img src="https://placehold.co/600x400/E1DEE6/142B6F?text=Career+Fair" alt="Career Fair" class="w-full h-auto object-cover rounded-xl shadow-lg transition-all duration-300 hover-scale hover:scale-105">
+            </div>
+        </section>
+
+        <!-- Industry Readiness Program Section -->
+        <section id="irp" class="my-12">
+            <h3 class="text-3xl font-bold text-primary-dark mb-6">Industry Readiness Program</h3>
+            <div class="bg-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover-lift">
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Our unique Industry Readiness Program is designed to bridge the gap between academic knowledge and industry expectations. The program includes:
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>Soft Skill Training (Communication, Teamwork, Leadership)</li>
+                    <li>Technical Workshops on cutting-edge technologies</li>
+                    <li>Mock Interviews and Group Discussion practice</li>
+                    <li>Resume and Cover Letter Writing Assistance</li>
+                    <li>Corporate Etiquette and Professionalism training</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Department Links Section -->
+        <section class="my-12">
+            <h3 class="text-3xl font-bold text-primary-dark mb-6">Explore by Department</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                <button onclick="handleDepartmentClick('Artificial Intelligence')" class="bg-accent-yellow text-primary-dark font-semibold py-4 px-2 rounded-lg shadow-md hover:bg-yellow-400 transition-all duration-300 hover-lift">Artificial Intelligence</button>
+                <button onclick="handleDepartmentClick('Applied Science')" class="bg-accent-yellow text-primary-dark font-semibold py-4 px-2 rounded-lg shadow-md hover:bg-yellow-400 transition-all duration-300 hover-lift">Applied Science</button>
+                <button onclick="handleDepartmentClick('Civil Engineering')" class="bg-accent-yellow text-primary-dark font-semibold py-4 px-2 rounded-lg shadow-md hover:bg-yellow-400 transition-all duration-300 hover-lift">Civil Engineering</button>
+                <button onclick="handleDepartmentClick('Computer Science')" class="bg-accent-yellow text-primary-dark font-semibold py-4 px-2 rounded-lg shadow-md hover:bg-yellow-400 transition-all duration-300 hover-lift">Computer Science</button>
+                <button onclick="handleDepartmentClick('Electrical Engineering')" class="bg-accent-yellow text-primary-dark font-semibold py-4 px-2 rounded-lg shadow-md hover:bg-yellow-400 transition-all duration-300 hover-lift">Electrical Engineering</button>
+                <button onclick="handleDepartmentClick('Electronics Engineering')" class="bg-accent-yellow text-primary-dark font-semibold py-4 px-2 rounded-lg shadow-md hover:bg-yellow-400 transition-all duration-300 hover-lift">Electronics Engineering</button>
+                <button onclick="handleDepartmentClick('Humanities')" class="bg-accent-yellow text-primary-dark font-semibold py-4 px-2 rounded-lg shadow-md hover:bg-yellow-400 transition-all duration-300 hover-lift">Humanities</button>
+                <button onclick="handleDepartmentClick('Information Technology')" class="bg-accent-yellow text-primary-dark font-semibold py-4 px-2 rounded-lg shadow-md hover:bg-yellow-400 transition-all duration-300 hover-lift">Information Technology</button>
+                <button onclick="handleDepartmentClick('Management Studies')" class="bg-accent-yellow text-primary-dark font-semibold py-4 px-2 rounded-lg shadow-md hover:bg-yellow-400 transition-all duration-300 hover-lift">Management Studies</button>
+                <button onclick="handleDepartmentClick('Mechanical Engineering')" class="bg-accent-yellow text-primary-dark font-semibold py-4 px-2 rounded-lg shadow-md hover:bg-yellow-400 transition-all duration-300 hover-lift">Mechanical Engineering</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer id="contact" class="bg-primary-dark text-white p-8 text-center mt-12 rounded-t-2xl">
+        <div class="container mx-auto">
+            <h4 class="text-2xl font-bold mb-2">Contact Us</h4>
+            <p class="text-gray-300">Training and Placement Cell, College Name, City, State, ZIP</p>
+            <p class="text-gray-300">Email: placement@college.edu | Phone: +91-1234567890</p>
+            <p class="mt-4 text-sm text-gray-400">&copy; 2024 College Name. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Menu and Buttons -->
+    <script>
+        // Toggle mobile menu visibility
+        document.getElementById('menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
             } else {
-                window.location.hash = '';
+                menu.classList.add('hidden');
             }
-        },
+        });
 
-        closeAllPopups(keepMobileMenuOpen = false) {
-            if (this.state.activeDropdown) {
-                const btn = this.elements[`${this.state.activeDropdown}DropdownBtn`];
-                const menu = this.elements[`${this.state.activeDropdown}DropdownMenu`];
-                btn.setAttribute('aria-expanded', 'false');
-                menu.classList.remove('active');
-                this.state.activeDropdown = null;
-            }
-            if (!keepMobileMenuOpen && this.state.isMobileMenuOpen) {
-                this.toggleMobileMenu();
-            }
-        },
-        
-        /** ADVANCED FEATURES */
-        showPlaceholderMessage(pageName) {
-            const toast = document.createElement('div');
-            toast.className = 'toast-notification';
-            toast.textContent = `${pageName} page is not available in this demo.`;
-            this.elements.appContainer.appendChild(toast);
-            
-            // Trigger the animation
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 10);
+        // Simple function for department button clicks
+        function handleDepartmentClick(department) {
+            // In a real application, this would redirect or show department-specific content.
+            // For now, we'll use a simple alert-like box.
+            const message = `You clicked on the ${department} department. This would link to the department-specific placement page.`;
+            showCustomMessage(message);
+        }
 
-            // Hide and remove the toast
-            setTimeout(() => {
-                toast.classList.remove('show');
-                toast.addEventListener('transitionend', () => toast.remove());
-            }, 3000);
-        },
-
-        handleKeyboardInput(e) {
-            if (e.key === 'Escape') {
-                if (this.state.isModalOpen) this.closeModal();
-                else if (this.state.activeDropdown) this.closeAllPopups(true);
-                else if (this.state.isMobileMenuOpen) this.toggleMobileMenu();
-            }
-
-            if (this.state.activeDropdown) {
-                const menu = this.elements[`${this.state.activeDropdown}DropdownMenu`];
-                const items = menu.querySelectorAll('.dropdown-item');
-                if (!items.length || document.activeElement.tagName === 'INPUT') return;
-
-                let newIndex = this.state.focusedDropdownIndex;
-                if (e.key === 'ArrowDown') { e.preventDefault(); newIndex = (newIndex + 1) % items.length; } 
-                else if (e.key === 'ArrowUp') { e.preventDefault(); newIndex = (newIndex - 1 + items.length) % items.length; } 
-                else if (e.key === 'Enter' && newIndex > -1) { e.preventDefault(); items[newIndex].click(); } 
-                else { return; }
-
-                if (this.state.focusedDropdownIndex > -1) items[this.state.focusedDropdownIndex].classList.remove('is-focused');
-                items[newIndex].classList.add('is-focused');
-                items[newIndex].focus();
-                this.state.focusedDropdownIndex = newIndex;
-            }
-        },
-
-        checkUrlHash() {
-            const hash = window.location.hash.substring(1);
-            if (this.placementOptions.some(opt => opt.id === hash)) {
-                this.openModal(hash);
+        // Custom alert-like message box
+        function showCustomMessage(message) {
+            let messageBox = document.getElementById('custom-message-box');
+            if (!messageBox) {
+                messageBox = document.createElement('div');
+                messageBox.id = 'custom-message-box';
+                messageBox.className = 'fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50';
+                messageBox.innerHTML = `
+                    <div class="bg-white p-8 rounded-lg shadow-xl max-w-sm w-full text-center">
+                        <p class="text-lg text-primary-dark font-semibold mb-4">${message}</p>
+                        <button onclick="closeCustomMessage()" class="bg-primary-dark text-white py-2 px-6 rounded-lg font-medium hover:bg-primary-darker transition-colors">OK</button>
+                    </div>
+                `;
+                document.body.appendChild(messageBox);
+            } else {
+                messageBox.querySelector('p').innerText = message;
+                messageBox.classList.remove('hidden');
             }
         }
-    };
 
-    App.init();
-});
-</script>
+        function closeCustomMessage() {
+            const messageBox = document.getElementById('custom-message-box');
+            if (messageBox) {
+                messageBox.classList.add('hidden');
+            }
+        }
+    </script>
 
 </body>
 </html>
